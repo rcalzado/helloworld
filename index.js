@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
 
-app.get('/',  (req, res) => res.send('R$ 750,00 na minha conta já!'));
+app.get('/',  (req, res) => res.send('Running!'));
 
 app.listen(3000);
