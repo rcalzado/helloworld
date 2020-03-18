@@ -4,7 +4,7 @@
 
 STACK=manager
 NETWORK=traefiknet
-HOST=delfino.ddns.net
+HOST=testservice.ddns.net
 
 REG_SERVER=localhost:5000
 SERVICE=$1
