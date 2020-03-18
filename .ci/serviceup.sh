@@ -17,10 +17,10 @@ DNS=$HOST
 LABEL0=com.docker.stack.namespace=$STACK
 LABEL1=traefik.enable=true
 LABEL2=traefik.port=$PORT
-LABEL3=traefik.http.routers.$SERVICE.rule=Host\\\(\\\`$DNS\\\`\\\)
+LABEL3=traefik.http.routers.$SERVICE.rule=Host\(\`$DNS\`\)
 LABEL4=traefik.http.routers.$SERVICE.entrypoints=web
 LABEL5=traefik.http.routers.$SERVICE.middlewares=https_redirect
-LABEL6=traefik.http.routers.$SERVICE"-ssl".rule=Host\\\(\\\`$DNS\\\`\\\)
+LABEL6=traefik.http.routers.$SERVICE"-ssl".rule=Host\(\`$DNS\`\)
 LABEL7=traefik.http.routers.$SERVICE"-ssl".entrypoints=websecure
 LABEL8=traefik.http.routers.$SERVICE"-ssl".tls.certresolver=dnsresolver
 
@@ -37,7 +37,7 @@ CONLBL[6]=$LABEL6
 CONLBL[7]=$LABEL7
 CONLBL[8]=$LABEL8
 
-CMD="docker service create -d --name $SERVICE --network $NTW --with-registry-auth"
+CMD="service create -d --name $SERVICE --network $NTW --with-registry-auth"
 
 for i in "${SVCLBL[@]}"
 do
@@ -51,4 +51,4 @@ done
 
 CMD="$CMD $IMAGE_NAME"
 
-echo $CMD
+docker $CMD
