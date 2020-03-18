@@ -1,4 +1,4 @@
 #!/bin/bash
 
 docker service rm $1
-sleep 10
+sleep 8
