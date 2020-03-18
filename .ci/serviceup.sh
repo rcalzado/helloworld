@@ -12,11 +12,17 @@ IMAGE_NAME=$REG_SERVER/$JOB:latest
 HOST=testservice.ddns.net
 #HOST=empresa.com
 
+APP_NAME="$(cut -d'-' -f2 <<<"$JOB")"
+APP_TYPE="$(cut -d'-' -f1 <<<"$JOB")"
+APP_ENVR="$(cut -d'-' -f3 <<<"$JOB")"
+
+#URL=$APP_TYPE.$APP_NAME.$APP_ENVR.$HOST
+
 URL=$HOST
 
 NTW=$STACK"_"$NETWORK
 
-$ROUTERS=traefik.http.routers
+ROUTERS=traefik.http.routers
 
 LABEL0=com.docker.stack.namespace=$STACK
 LABEL1=traefik.enable=true
