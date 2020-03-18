@@ -4,23 +4,20 @@
 
 STACK=manager
 NETWORK=traefiknet
-HOST=testservice.ddns.net
 
 REG_SERVER=localhost:5000
 SERVICE=$1
 IMAGE_NAME=$REG_SERVER/$SERVICE:latest
 
 NTW=$STACK"_"$NETWORK
-DNS=$HOST
-#DNS=$APP.$SERVICE_NAME.$ENV.$HOST
 
 LABEL0=com.docker.stack.namespace=$STACK
 LABEL1=traefik.enable=true
 LABEL2=traefik.port=$PORT
-LABEL3=traefik.http.routers.$SERVICE.rule=Host\(\`$DNS\`\)
+LABEL3=traefik.http.routers.$SERVICE.rule=Host\(\`$HOST\`\)
 LABEL4=traefik.http.routers.$SERVICE.entrypoints=web
 LABEL5=traefik.http.routers.$SERVICE.middlewares=https_redirect
-LABEL6=traefik.http.routers.$SERVICE"-ssl".rule=Host\(\`$DNS\`\)
+LABEL6=traefik.http.routers.$SERVICE"-ssl".rule=Host\(\`$HOST\`\)
 LABEL7=traefik.http.routers.$SERVICE"-ssl".entrypoints=websecure
 LABEL8=traefik.http.routers.$SERVICE"-ssl".tls.certresolver=dnsresolver
 
