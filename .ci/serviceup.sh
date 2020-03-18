@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ./.service.env
+source $(dirname $0)/.service.env
 
 STACK=manager
 NETWORK=traefiknet
