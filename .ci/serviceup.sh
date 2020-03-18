@@ -6,20 +6,27 @@ STACK=manager
 NETWORK=traefiknet
 
 REG_SERVER=localhost:5000
-SERVICE=$1
-IMAGE_NAME=$REG_SERVER/$SERVICE:latest
+JOB=$1
+IMAGE_NAME=$REG_SERVER/$JOB:latest
+
+HOST=testservice.ddns.net
+#HOST=empresa.com
+
+URL=$HOST
 
 NTW=$STACK"_"$NETWORK
+
+$ROUTERS=traefik.http.routers
 
 LABEL0=com.docker.stack.namespace=$STACK
 LABEL1=traefik.enable=true
 LABEL2=traefik.port=$PORT
-LABEL3=traefik.http.routers.$SERVICE.rule=Host\(\`$HOST\`\)
-LABEL4=traefik.http.routers.$SERVICE.entrypoints=web
-LABEL5=traefik.http.routers.$SERVICE.middlewares=https_redirect
-LABEL6=traefik.http.routers.$SERVICE"-ssl".rule=Host\(\`$HOST\`\)
-LABEL7=traefik.http.routers.$SERVICE"-ssl".entrypoints=websecure
-LABEL8=traefik.http.routers.$SERVICE"-ssl".tls.certresolver=dnsresolver
+LABEL3=$ROUTERS.$JOB.rule=Host\(\`$URL\`\)
+LABEL4=$ROUTERS.$JOB.entrypoints=web
+LABEL5=$ROUTERS.$JOB.middlewares=https_redirect
+LABEL6=$ROUTERS.$JOB"-ssl".rule=Host\(\`$URL\`\)
+LABEL7=$ROUTERS.$JOB"-ssl".entrypoints=websecure
+LABEL8=$ROUTERS.$JOB"-ssl".tls.certresolver=dnsresolver
 
 SVCLBL[0]=$LABEL0
 SVCLBL[1]=com.docker.stack.image=$IMAGE_NAME
@@ -34,7 +41,7 @@ CONLBL[6]=$LABEL6
 CONLBL[7]=$LABEL7
 CONLBL[8]=$LABEL8
 
-CMD="service create -d --name $SERVICE --network $NTW --with-registry-auth"
+CMD="service create -d --name $JOB --network $NTW --with-registry-auth"
 
 for i in "${SVCLBL[@]}"
 do
